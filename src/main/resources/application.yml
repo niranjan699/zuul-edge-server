@@ -1,0 +1,57 @@
+
+server:
+  port: 8082
+
+
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    books:
+      path: /books/**
+      serviceId: book
+
+    service2:
+        path: /service2/**
+        serviceId: service2
+
+
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 8300
+      maximumQueueSize: 0
+      maximumSize: 1
+
+
+ribbon:
+  eureka:
+    enabled: false
+  MaxTotalConnections: 2000
+  MaxConnectionsPerHost: 500
+  PoolMaxThreads: 5
+
+book:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://localhost:8091
+    ConnectTimeout: 1000
+    ReadTimeout: 3100
+    MaxTotalHttpConnections: 1
+    MaxConnectionsPerHost: 3
+
+
+
+service2:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://localhost:8093
+    ConnectTimeout: 1000
+    ReadTimeout: 2100
+    MaxTotalHttpConnections: 1
+    MaxConnectionsPerHost: 3

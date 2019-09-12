@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: sample-gateway
+
+
+eureka:
+  client:
+    enabled: false
